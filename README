@@ -1,0 +1,10 @@
+TokenKind.java - A class created to interpret character sequences as a Token.
+Tokenizer.java - A class used to either get the current token from a string or to skip to the net token in the string.
+TokenizerTest.java - A program used to test both the TokenKind and the Tokenizer.
+
+Compilation + Exectuion Instructions:
+Place TokenKind.java, Tokenizer.java, and TokenizerTest.java in the same directory. Use the command:
+javac *.java
+Then, use the command:
+java TokenizerTest TESTFILE
+where TESTFILE contains the string you wish to parse.

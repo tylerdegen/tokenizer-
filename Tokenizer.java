@@ -105,7 +105,7 @@ public class Tokenizer {
 		//end of file, check if index is length of string because -1 will be last char
 		//need to also check if scan has next?
 		//skip token sets it as MINVALUE if eof
-        if (index == currentLine.length() - 1 || Tok == Character.MIN_VALUE){
+        if (currentLine.length() == 0 || index == currentLine.length() - 1 || Tok == Character.MIN_VALUE){
                 return TokenKind.EOF;
         }
         TokenKind getTok = TokenKind.ERROR;

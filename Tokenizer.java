@@ -117,12 +117,12 @@ public class Tokenizer {
             getTok = TokenKind.LOWER_CASE_WORD;
         }
 		
-		/*
+		
 		//semicolon
         else if (Tok == ';'){
             getTok = TokenKind.SEMICOLON;
         }
-		
+		/*
 		//equality test or assignment?
         else if (Tok == '='){
             if (currentLine.charAt(index + 1) == '='){
@@ -187,12 +187,13 @@ public class Tokenizer {
             }
         }
 		
-		/*
+		
         else if (Tok == ';'){
 
             Tok = currentLine.charAt(index + 1);
             index += 1;
         }
+		/*
         else if (Tok == '='){
             if (currentLine.charAt(index + 1) == '='){
                 //skip two

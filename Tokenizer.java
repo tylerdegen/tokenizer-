@@ -87,7 +87,11 @@ public class Tokenizer {
 
     public Tokenizer(Scanner in){
         scan = in;
+		if (scan.hasNext()){
         currentLine = scan.nextLine();
+		} else{
+			currentLine = "";
+		}
     }
 
     /**
@@ -99,13 +103,12 @@ public class Tokenizer {
     TokenKind getToken(){
 
 		//end of file, check if index is length of string because -1 will be last char
-        if (Tok == Character.MIN_VALUE){
+		//need to also check if scan has next?
+		//skip token sets it as MINVALUE if eof
+        if (index == currentLine.length() - 1 || Tok == Character.MIN_VALUE){
                 return TokenKind.EOF;
         }
-
-		
         TokenKind getTok = TokenKind.ERROR;
-		
 		//get the token
         Tok = currentLine.charAt(index);
 		
@@ -114,6 +117,7 @@ public class Tokenizer {
             getTok = TokenKind.LOWER_CASE_WORD;
         }
 		
+		/*
 		//semicolon
         else if (Tok == ';'){
             getTok = TokenKind.SEMICOLON;
@@ -148,6 +152,8 @@ public class Tokenizer {
         else if (Character.isUpperCase(Tok)){
             getTok = TokenKind.IDENTIFIER;
         }
+		
+		*/
         return getTok;
     };
 
@@ -175,11 +181,13 @@ public class Tokenizer {
         }
         //a lot of these could be lumped, but are separated for the sake of being explicit
         if (Character.isLowerCase(Tok)){
-            while (Character.isLowerCase(Tok) && index < currentLine.length()){
+            while (Character.isLowerCase(Tok) && index + 1 < currentLine.length()){
                 Tok = currentLine.charAt(index + 1);
                 index += 1;
             }
         }
+		
+		/*
         else if (Tok == ';'){
 
             Tok = currentLine.charAt(index + 1);
@@ -224,7 +232,7 @@ public class Tokenizer {
                 index += 1;
             }
         }
-
+*/
         //cut through white space
         while (Tok == ' '){
                 index += 1;

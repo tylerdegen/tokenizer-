@@ -242,9 +242,6 @@ public class Tokenizer {
 				index += 1;
         }
 
-
-
-
     };
 
     /*

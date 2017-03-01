@@ -91,6 +91,7 @@ public class Tokenizer {
         currentLine = scan.nextLine();
 		} else{
 			currentLine = "";
+			Tok = Character.MIN_VALUE;
 		}
     }
 
@@ -105,7 +106,7 @@ public class Tokenizer {
 		//end of file, check if index is length of string because -1 will be last char
 		//need to also check if scan has next?
 		//skip token sets it as MINVALUE if eof
-        if (currentLine.length() == 0 || index == currentLine.length() - 1 || Tok == Character.MIN_VALUE){
+        if (currentLine.length() == 0 || index == currentLine.length() || Tok == Character.MIN_VALUE){
                 return TokenKind.EOF;
         }
         TokenKind getTok = TokenKind.ERROR;
@@ -169,9 +170,10 @@ public class Tokenizer {
     void skipToken(){
         char Tok = currentLine.charAt(index);
                 //get next line if it exists
-        if (index + 1 == currentLine.length()){
+        if (index == currentLine.length()){
             if (scan.hasNext()){
                 currentLine = scan.nextLine();
+				index = 0;
             }
             else{
                 //somehow set Tok as end of file
@@ -181,8 +183,8 @@ public class Tokenizer {
         }
         //a lot of these could be lumped, but are separated for the sake of being explicit
         if (Character.isLowerCase(Tok)){
-            while (Character.isLowerCase(Tok) && index + 1 < currentLine.length()){
-                Tok = currentLine.charAt(index + 1);
+            while (Character.isLowerCase(Tok) && index < currentLine.length()){
+                Tok = currentLine.charAt(index);
                 index += 1;
             }
         }
@@ -190,7 +192,7 @@ public class Tokenizer {
 		
         else if (Tok == ';'){
 
-            Tok = currentLine.charAt(index + 1);
+            Tok = currentLine.charAt(index);
             index += 1;
         }
 		/*

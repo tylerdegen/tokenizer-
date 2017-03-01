@@ -237,9 +237,9 @@ public class Tokenizer {
         }
 */
         //cut through white space
-        while (Tok == ' '){
-                index += 1;
-                Tok = currentLine.charAt(index + 1);
+        while (Tok == ' ' && index < currentLine.length()){
+                Tok = currentLine.charAt(index);
+				index += 1;
         }
 
 

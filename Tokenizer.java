@@ -181,10 +181,12 @@ public class Tokenizer {
                 return;
             }
         }
+		
+		Tok = currentLine.charAt(index);
         //a lot of these could be lumped, but are separated for the sake of being explicit
         if (Character.isLowerCase(Tok)){
-            while (Character.isLowerCase(Tok) && index < currentLine.length()){
-                Tok = currentLine.charAt(index);
+			//if first fails, will keep from checking second
+            while (index < currentLine.length() && Character.isLowerCase(currentLine.charAt(index))){
                 index += 1;
             }
         }
@@ -237,8 +239,8 @@ public class Tokenizer {
         }
 */
         //cut through white space
-        while (Tok == ' ' && index < currentLine.length()){
-                Tok = currentLine.charAt(index);
+        while (index < currentLine.length() && currentLine.charAt(index) == ' '){
+                //Tok = currentLine.charAt(index);
 				index += 1;
         }
 

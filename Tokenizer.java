@@ -143,17 +143,16 @@ public class Tokenizer {
             }
         }
 		
-		/*
+		
 		//Integer
         else if (Character.isDigit(Tok)){
             getTok = TokenKind.INTEGER_CONSTANT;
         }
-		
+		/*
 		//Uppercase Identifier
         else if (Character.isUpperCase(Tok)){
             getTok = TokenKind.IDENTIFIER;
         }
-		
 		*/
         return getTok;
     };
@@ -217,6 +216,12 @@ public class Tokenizer {
                 Tok = currentLine.charAt(index + 1);
                 index += 1;
                 //getTok = TokenKind.ERROR;
+            }
+        }
+		else if (Character.isDigit(Tok)){
+			//if first fails, will keep from checking second
+            while (index < currentLine.length() && Character.isDigit(currentLine.charAt(index))){
+                index += 1;
             }
         }
 		/*

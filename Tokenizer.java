@@ -133,10 +133,9 @@ public class Tokenizer {
                 getTok = TokenKind.ASSIGNMENT_OPERATOR;
             }
         }
-		/*
 		//or operator or error?
         else if (Tok == '|'){
-            if (currentLine.charAt(index + 1) =='|'){
+            if (index < currentLine.length() - 1 && currentLine.charAt(index + 1) =='|'){
                 getTok = TokenKind.OR_OPERATOR;
             }
             else{
@@ -144,6 +143,7 @@ public class Tokenizer {
             }
         }
 		
+		/*
 		//Integer
         else if (Character.isDigit(Tok)){
             getTok = TokenKind.INTEGER_CONSTANT;
@@ -207,19 +207,19 @@ public class Tokenizer {
 			}
 			
         }
-		/*
         else if (Tok == '|'){
-            if (currentLine.charAt(index + 1) =='|'){
-                Tok = currentLine.charAt(index + 2);
+            if (index < currentLine.length() - 1 && currentLine.charAt(index + 1) =='|'){
+                //Tok = currentLine.charAt(index + 2);
                 index += 2;
-                //getTok = TokenKind.OR_OPERATOR;
             }
             else{
+				//don't really need to, will throw error if it reads as error
                 Tok = currentLine.charAt(index + 1);
                 index += 1;
                 //getTok = TokenKind.ERROR;
             }
         }
+		/*
         else if (Character.isDigit(Tok)){
             while (Character.isDigit(Tok)){
                 Tok = currentLine.charAt(index + 1);

@@ -129,6 +129,28 @@ public class Tokenizer {
             }
             //else, end
             else if (Tok == 'e'){
+                //make sure can test next char
+                if (index < currentLine.length()){
+                    //test for else
+                    if (currentLine.charAt(index + 1) == 'l'){
+                        if(currentLine.length() - index >= "else".length()){
+                            String test = currentLine.substring(index, index+"else".length());
+                            if test.equals("else"){
+                                getTok = TokenKind.ELSE;
+                            }
+                        }
+                    }
+                    //test for end
+                    else if (currentLine.charAt(index + 1) == 'n'){
+                        if(currentLine.length() - index >= "end".length()){
+                            String test = currentLine.substring(index, index+"end".length());
+                            if test.equals("end"){
+                                getTok = TokenKind.END;
+                            }
+                        }
+                    }
+                }
+            }
             
             }
             //if, int

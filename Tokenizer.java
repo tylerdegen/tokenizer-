@@ -148,12 +148,12 @@ public class Tokenizer {
         else if (Character.isDigit(Tok)){
             getTok = TokenKind.INTEGER_CONSTANT;
         }
-		/*
+		
 		//Uppercase Identifier
         else if (Character.isUpperCase(Tok)){
             getTok = TokenKind.IDENTIFIER;
         }
-		*/
+		
         return getTok;
     };
 
@@ -224,14 +224,14 @@ public class Tokenizer {
                 index += 1;
             }
         }
-		/*
-        else if (Character.isDigit(Tok)){
-            while (Character.isDigit(Tok)){
-                Tok = currentLine.charAt(index + 1);
+        
+        else if (Character.isUpperCase(Tok)){
+			//if first fails, will keep from checking second
+            while (index < currentLine.length() && Character.isUpperCase(currentLine.charAt(index))){
                 index += 1;
             }
-            //getTok = TokenKind.INTEGER_CONSTANT;
         }
+        /*
         else if (Character.isUpperCase(Tok)){
             //getTok = TokenKind.IDENTIFIER;
             while (Character.isUpperCase(Tok)){
@@ -239,7 +239,7 @@ public class Tokenizer {
                 index += 1;
             }
         }
-*/
+        */
         //cut through white space
         while (index < currentLine.length() && currentLine.charAt(index) == ' '){
                 //Tok = currentLine.charAt(index);

@@ -123,17 +123,17 @@ public class Tokenizer {
         else if (Tok == ';'){
             getTok = TokenKind.SEMICOLON;
         }
-		/*
+		
 		//equality test or assignment?
         else if (Tok == '='){
-            if (currentLine.charAt(index + 1) == '='){
+            if (index < currentLine.length() - 1 && currentLine.charAt(index + 1) == '='){
                 getTok = TokenKind.EQUALITY_TEST;
             }
             else{
                 getTok = TokenKind.ASSIGNMENT_OPERATOR;
             }
         }
-		
+		/*
 		//or operator or error?
         else if (Tok == '|'){
             if (currentLine.charAt(index + 1) =='|'){
@@ -197,20 +197,17 @@ public class Tokenizer {
             Tok = currentLine.charAt(index);
             index += 1;
         }
-		/*
+		
         else if (Tok == '='){
-            if (currentLine.charAt(index + 1) == '='){
-                //skip two
-                //getTok = TokenKind.EQUALITY_TEST;
-                Tok = currentLine.charAt(index + 2);
-                index += 2;
-            }
-            else{
-                //getTok = TokenKind.ASSIGNMENT_OPERATOR;
-                Tok = currentLine.charAt(index + 1);
-                index += 1;
-            }
+			if (index < currentLine.length() -1 && currentLine.charAt(index + 1) == '='){
+				index += 2;
+			}
+			else{
+				index += 1;
+			}
+			
         }
+		/*
         else if (Tok == '|'){
             if (currentLine.charAt(index + 1) =='|'){
                 Tok = currentLine.charAt(index + 2);

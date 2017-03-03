@@ -113,9 +113,51 @@ public class Tokenizer {
 		//get the token
         Tok = currentLine.charAt(index);
 		
-		//currently looking at a lowercase
+		//currently looking at a lowercase, need to check and see if it's any reserved word
         if (Character.isLowerCase(Tok)){
-            getTok = TokenKind.LOWER_CASE_WORD;
+            //if it can be uniquely identified, check to see long enough to be checked,
+            //then string.equals() to make your life so much easier
+            //begin
+            if (Tok == 'b'){
+                //if remaining length is greater than or eq to string that needs to be parsed
+                if (currentLine.length() - index >= "begin".length()){
+                    String test = currentLine.substring(index, index+"begin".length());
+                    if (test.equals("begin")){
+                        getTok = TokenKind.BEGIN;
+                    } 
+                }
+            }
+            //else, end
+            else if (Tok == 'e'){
+            
+            }
+            //if, int
+            else if (Tok == 'i'){
+            
+            }
+            //loop
+            else if (Tok == 'l'){
+            
+            }
+            //program
+            else if (Tok == 'p'){
+            
+            }
+            //read
+            else if (Tok == 'r'){
+            
+            }
+            //then
+            else if (Tok == 't'){
+            
+            }
+            //while, write
+            else if (Tok == 'w'){
+            
+            }
+            else{
+                getTok = TokenKind.ERROR;
+            }
         }
 		
 		

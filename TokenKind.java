@@ -10,9 +10,63 @@
 enum TokenKind {
 
     /**
-     * Test driver's token number = 1.
+     * Test driver's token number = 1, token is program
      */
-    LOWER_CASE_WORD(1),
+    PROGRAM(1),
+    
+        /**
+     * Test driver's token number = 1, token is program
+     */
+    BEGIN(2),
+    
+    /**
+     * Test driver's token number = 1, token is program
+     */
+    END(3),
+    
+    /**
+     * Test driver's token number = 1, token is program
+     */
+    INT(4),
+    
+    /**
+     * Test driver's token number = 1, token is program
+     */
+    IF(5),
+    
+    /**
+     * Test driver's token number = 1, token is program
+     */
+    THEN(6),
+    
+    /**
+     * Test driver's token number = 1, token is program
+     */
+    ELSE(7),
+    
+    /**
+     * Test driver's token number = 1, token is program
+     */
+    WHILE(8),
+    
+    /**
+     * Test driver's token number = 1, token is program
+     */
+    LOOP(9),
+    
+    /**
+     * Test driver's token number = 1, token is program
+     */
+    READ(10),
+    
+    /**
+     * Test driver's token number = 1, token is program
+     */
+    WRITE(11),
+    
+    /**
+    * 
+    */
 
         /**
          * Test driver's token number = 12; token is ;.

@@ -248,6 +248,11 @@ public class Tokenizer {
             getTok = TokenKind.SEMICOLON;
         }
 		
+				//comma
+        else if (Tok == ','){
+            getTok = TokenKind.COMMA;
+        }
+		
 		//equality test or assignment?
         else if (Tok == '='){
             if (index < currentLine.length() - 1 && currentLine.charAt(index + 1) == '='){
@@ -256,6 +261,24 @@ public class Tokenizer {
             else{
                 getTok = TokenKind.ASSIGNMENT_OPERATOR;
             }
+        }
+		
+				//! or !=?
+        else if (Tok == '!'){
+            if (index < currentLine.length() - 1 && currentLine.charAt(index + 1) == '='){
+                getTok = TokenKind.NOT_EQUAL;
+            }
+            else{
+                getTok = TokenKind.EXCLAMATION;
+            }
+        }
+		
+		else if (Tok == '['){
+            getTok = TokenKind.LEFT_BRACKET;
+        }
+		
+		else if (Tok == ']'){
+            getTok = TokenKind.RIGHT_BRACKET;
         }
 		//or operator or error?
         else if (Tok == '|'){
@@ -321,6 +344,12 @@ public class Tokenizer {
             index += 1;
         }
 		
+		else if (Tok == ','){
+
+            Tok = currentLine.charAt(index);
+            index += 1;
+        }
+		
         else if (Tok == '='){
 			if (index < currentLine.length() -1 && currentLine.charAt(index + 1) == '='){
 				index += 2;
@@ -329,6 +358,26 @@ public class Tokenizer {
 				index += 1;
 			}
 			
+        }
+		
+		else if (Tok == '!'){
+			if (index < currentLine.length() -1 && currentLine.charAt(index + 1) == '='){
+				index += 2;
+			}
+			else{
+				index += 1;
+			}
+			
+        }
+		else if (Tok == '['){
+
+            Tok = currentLine.charAt(index);
+            index += 1;
+        }
+		else if (Tok == ']'){
+
+            Tok = currentLine.charAt(index);
+            index += 1;
         }
         else if (Tok == '|'){
             if (index < currentLine.length() - 1 && currentLine.charAt(index + 1) =='|'){

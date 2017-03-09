@@ -290,6 +290,50 @@ public class Tokenizer {
             }
         }
 		
+		//and operator or error?
+        else if (Tok == '&'){
+            if (index < currentLine.length() - 1 && currentLine.charAt(index + 1) =='&'){
+                getTok = TokenKind.AND_OPERATOR;
+            }
+            else{
+                getTok = TokenKind.ERROR;
+            }
+        }
+		
+		else if (Tok == '('){
+            getTok = TokenKind.LEFT_PAR;
+        }
+		
+		else if (Tok == ')'){
+            getTok = TokenKind.RIGHT_PAR;
+        }
+		else if (Tok == '+'){
+            getTok = TokenKind.PLUS;
+        }
+		
+		else if (Tok == '-'){
+            getTok = TokenKind.MINUS;
+        }
+		else if (Tok == '*'){
+            getTok = TokenKind.MULT;
+        }
+		else if (Tok == '<'){
+            if (index < currentLine.length() - 1 && currentLine.charAt(index + 1) == '='){
+                getTok = TokenKind.LESS_EQUAL;
+            }
+            else{
+                getTok = TokenKind.LESS;
+            }
+        }
+		else if (Tok == '>'){
+            if (index < currentLine.length() - 1 && currentLine.charAt(index + 1) == '='){
+                getTok = TokenKind.GREATER_EQUAL;
+            }
+            else{
+                getTok = TokenKind.GREATER;
+            }
+        }
+		
 		
 		//Integer
         else if (Character.isDigit(Tok)){
@@ -379,6 +423,18 @@ public class Tokenizer {
             Tok = currentLine.charAt(index);
             index += 1;
         }
+		else if (Tok == '&'){
+            if (index < currentLine.length() - 1 && currentLine.charAt(index + 1) =='&'){
+                //Tok = currentLine.charAt(index + 2);
+                index += 2;
+            }
+            else{
+				//don't really need to, will throw error if it reads as error
+                Tok = currentLine.charAt(index + 1);
+                index += 1;
+                //getTok = TokenKind.ERROR;
+            }
+        }
         else if (Tok == '|'){
             if (index < currentLine.length() - 1 && currentLine.charAt(index + 1) =='|'){
                 //Tok = currentLine.charAt(index + 2);
@@ -390,6 +446,51 @@ public class Tokenizer {
                 index += 1;
                 //getTok = TokenKind.ERROR;
             }
+        }
+		
+		else if (Tok == '('){
+
+            Tok = currentLine.charAt(index);
+            index += 1;
+        }
+		else if (Tok == ')'){
+
+            Tok = currentLine.charAt(index);
+            index += 1;
+        }
+		
+		else if (Tok == '+'){
+
+            Tok = currentLine.charAt(index);
+            index += 1;
+        }
+		else if (Tok == '-'){
+
+            Tok = currentLine.charAt(index);
+            index += 1;
+        }
+		else if (Tok == '*'){
+
+            Tok = currentLine.charAt(index);
+            index += 1;
+        }
+		else if (Tok == '<'){
+			if (index < currentLine.length() -1 && currentLine.charAt(index + 1) == '='){
+				index += 2;
+			}
+			else{
+				index += 1;
+			}
+			
+        }
+		else if (Tok == '>'){
+			if (index < currentLine.length() -1 && currentLine.charAt(index + 1) == '='){
+				index += 2;
+			}
+			else{
+				index += 1;
+			}
+			
         }
 		else if (Character.isDigit(Tok)){
 			//if first fails, will keep from checking second

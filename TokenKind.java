@@ -72,21 +72,96 @@ enum TokenKind {
          * Test driver's token number = 12; token is ;.
          */
         SEMICOLON(12),
+		
+		        /**
+         * Test driver's token number = 12; token is ,.
+         */
+        COMMA(13),
 
         /**
          * Test driver's token number = 14; token is =.
          */
         ASSIGNMENT_OPERATOR(14),
+		
+		        /**
+         * Test driver's token number = 14; token is =.
+         */
+        EXCLAMATION(15),
+		
+		        /**
+         * Test driver's token number = 14; token is =.
+         */
+        LEFT_BRACKET(16),
+		
+		        /**
+         * Test driver's token number = 14; token is =.
+         */
+        RIGHT_BRACKET(17),
+		
+		        /**
+         * Test driver's token number = 14; token is =.
+         */
+        AND_OPERATOR(18),
 
         /**
          * Test driver's token number = 19; token is ||.
          */
         OR_OPERATOR(19),
+		
+		        /**
+         * Test driver's token number = 14; token is =.
+         */
+        LEFT_PAR(20),
+		
+		        /**
+         * Test driver's token number = 14; token is =.
+         */
+        RIGHT_PAR(21),
+		
+		        /**
+         * Test driver's token number = 14; token is =.
+         */
+        PLUS(22),
+		
+		        /**
+         * Test driver's token number = 14; token is =.
+         */
+        MINUS(23),
+		
+		        /**
+         * Test driver's token number = 14; token is =.
+         */
+        MULT(24),
+		
+		        /**
+         * Test driver's token number = 14; token is =.
+         */
+        NOT_EQUAL(25),
 
         /**
          * Test driver's token number = 26; token is ==.
          */
         EQUALITY_TEST(26),
+		
+		        /**
+         * Test driver's token number = 14; token is =.
+         */
+        LESS(27),
+		
+		        /**
+         * Test driver's token number = 14; token is =.
+         */
+        GREATER(28),
+		
+		        /**
+         * Test driver's token number = 14; token is =.
+         */
+        LESS_EQUAL(29),
+		
+		        /**
+         * Test driver's token number = 14; token is =.
+         */
+        GREATER_EQUAL(30),
 
         /**
          * Test driver's token number = 31.

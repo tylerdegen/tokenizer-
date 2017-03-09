@@ -135,7 +135,7 @@ public class Tokenizer {
                     if (currentLine.charAt(index + 1) == 'l'){
                         if(currentLine.length() - index >= "else".length()){
                             String test = currentLine.substring(index, index+"else".length());
-                            if test.equals("else"){
+                            if (test.equals("else")){
                                 getTok = TokenKind.ELSE;
                             }
                         }
@@ -144,38 +144,98 @@ public class Tokenizer {
                     else if (currentLine.charAt(index + 1) == 'n'){
                         if(currentLine.length() - index >= "end".length()){
                             String test = currentLine.substring(index, index+"end".length());
-                            if test.equals("end"){
+                            if (test.equals("end")){
                                 getTok = TokenKind.END;
                             }
                         }
                     }
                 }
-            }
-            
+			
             }
             //if, int
             else if (Tok == 'i'){
+				                //make sure can test next char
+                if (index < currentLine.length()){
+                    //test for if
+                    if (currentLine.charAt(index + 1) == 'f'){
+                        if(currentLine.length() - index >= "else".length()){
+                            String test = currentLine.substring(index, index+"if".length());
+                            if (test.equals("if")){
+                                getTok = TokenKind.IF;
+                            }
+                        }
+                    }
+                    //test for int
+                    else if (currentLine.charAt(index + 1) == 'n'){
+                        if(currentLine.length() - index >= "int".length()){
+                            String test = currentLine.substring(index, index+"int".length());
+                            if (test.equals("int")){
+                                getTok = TokenKind.INT;
+                            }
+                        }
+                    }
+                }
             
             }
             //loop
             else if (Tok == 'l'){
-            
+				//if remaining length is greater than or eq to string that needs to be parsed
+                if (currentLine.length() - index >= "loop".length()){
+                    String test = currentLine.substring(index, index+"loop".length());
+                    if (test.equals("loop")){
+                        getTok = TokenKind.LOOP;
+                    } 
+                }
             }
             //program
             else if (Tok == 'p'){
-            
+                if (currentLine.length() - index >= "program".length()){
+                    String test = currentLine.substring(index, index+"program".length());
+                    if (test.equals("program")){
+                        getTok = TokenKind.PROGRAM;
+                    } 
+                }
             }
             //read
             else if (Tok == 'r'){
-            
+                if (currentLine.length() - index >= "read".length()){
+                    String test = currentLine.substring(index, index+"read".length());
+                    if (test.equals("read")){
+                        getTok = TokenKind.READ;
+                    } 
+                }
             }
             //then
             else if (Tok == 't'){
-            
+                if (currentLine.length() - index >= "then".length()){
+                    String test = currentLine.substring(index, index+"then".length());
+                    if (test.equals("then")){
+                        getTok = TokenKind.THEN;
+                    } 
+                }
             }
             //while, write
             else if (Tok == 'w'){
-            
+                            if (index < currentLine.length()){
+                    //test for if
+                    if (currentLine.charAt(index + 1) == 'h'){
+                        if(currentLine.length() - index >= "while".length()){
+                            String test = currentLine.substring(index, index+"while".length());
+                            if (test.equals("while")){
+                                getTok = TokenKind.WHILE;
+                            }
+                        }
+                    }
+                    //test for int
+                    else if (currentLine.charAt(index + 1) == 'r'){
+                        if(currentLine.length() - index >= "write".length()){
+                            String test = currentLine.substring(index, index+"write".length());
+                            if (test.equals("write")){
+                                getTok = TokenKind.WRITE;
+                            }
+                        }
+                    }
+                }
             }
             else{
                 getTok = TokenKind.ERROR;

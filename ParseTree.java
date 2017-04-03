@@ -79,5 +79,27 @@ public class ParseTree {
 
 //parse program
 public static ParseTree constructPT(Tokenizer t){
+	//start with creating the program
+	ParseTree p = new ParseTree("program");
+	if (t.currentToken() != TokenKind.PROGRAM){
+		System.out.println("Input does not begin with program.");
+	}
+	t.skipToken();
+	//then begin statement
+	p.append(parseDeclSeq(s));
+	if (s.currentToken() != TokenKind.BEGIN){
+		System.out.println("Should have begin");
+	}
+	t.skipToken();
+	p.append(parseStmtSeq(s));
+	if (s.currentToken != TokenKind.END){
+		System.out.print("should have end");
+	}
+	t.skipToken();
+	if (t.currentToken() != TokenKind.EOF){
+		System.out.print("File should end with end!");
+	}
+	
+	return p;
 	
 }

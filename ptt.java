@@ -113,7 +113,6 @@ public class ptt {
             default:
                 System.out.println("DIdn't find case for parseStmtSeq");
                 break;
-
         }
         //CHECK THIS, should it skip a token here
         switch (tk) {
@@ -282,26 +281,54 @@ public class ptt {
 
     public static ParseTree parseAssign(Tokenizer t) {
         ParseTree p = new ParseTree("assign");
-        if (t.getToken() != TokenKind.ASSIGNMENT_OPERATOR) {
-            System.out.println("error");
+        if (t.getToken() != TokenKind.IDENTIFIER) {
+            System.out.println("identifier expected");
         }
+        ParseTree id = new ParseTree("id");
+        //how give value to id?
+        p.append(id);
+        t.skipToken();
+        if (t.getToken() != TokenKind.ASSIGNMENT_OPERATOR){
+        	System.out.println("assignment operator expected");
+        }
+        t.skipToken();
+        p.append(parseExpr(t));
+        if (t.getToken() != TokenKind.SEMICOLON){
+        	System.out.println("semicolon expected");
+        }
+        t.skipToken();
         return p;
     }
 
     public static ParseTree parseExpr(Tokenizer t) {
         ParseTree p = new ParseTree("expr");
         //check against plus, minus 
-        if (t.getToken() != TokenKind.WHILE) {
-            System.out.println("error");
+        p.append(parseTrm(t));
+        if (t.getToken() == TokenKind.PLUS){
+        	ParseTree plus = new ParseTree("plus");
+        	p.append(plus);
+        }else if (t.getToken() == TokenKind.MINUS){
+        	ParseTree minus = new ParseTree("minus");
+        	p.append(minus);
         }
+        else{
+        	System.out.println("Expecting plus or minus");
+        }
+        t.skipToken();
+        p.append(parseExpr(t));	
         return p;
     }
 
     public static ParseTree parseTrm(Tokenizer t) {
         ParseTree p = new ParseTree("trm");
         //for strictly multiplication
-        if (t.getToken() != TokenKind.WHILE) {
-            System.out.println("error");
+        p.append(parseOp(t));
+        if (t.getToken() != TokenKind.MULT) {
+            System.out.println("Expecting multiplication!");
+        } else{
+        	p.append(new ParseTree("times"));
+        	t.skipToken();
+        	p.append(parseTrm(t));
         }
         return p;
     }
@@ -309,9 +336,38 @@ public class ptt {
     //parens
     public static ParseTree parseOp(Tokenizer t) {
         ParseTree p = new ParseTree("op");
-        if (t.getToken() != TokenKind.WHILE) {
-            System.out.println("error");
+        TokenKind tk = t.getToken();
+        
+        switch (tk) {
+            case INTEGER_CONSTANT:
+            	ParseTree i = new ParseTree("integer_constant");
+                p.append(i);
+                t.skipToken();
+                break;
+            case IDENTIFIER:
+                ParseTree id = new ParseTree("identifier");
+        	p.append(id);
+        	t.skipToken();
+                break;
+            case MINUS:
+            	ParseTree min = new ParseTree("min");
+            	t.skipToken();
+            	p.append(min);
+            	p.append(parseOp(t));
+            	break;
+            case LEFT_PAR:
+            	t.skipToken();
+            	p.append(parseExpr(t));
+            	if (t.getToken() != TokenKind.RIGHT_PAR){
+            		System.out.println("Right parenthesis expected");
+            	}
+            	t.skipToken();
+            	break;
+            default:
+            	System.out.println("Expecting a factor");
+            	break;
         }
+        
         return p;
     }
 }

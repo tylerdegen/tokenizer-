@@ -1,6 +1,21 @@
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.Scanner;
+
 public class ptt {
     public static void main(String[] args) {
         System.out.println("test");
+        Scanner in;
+        //ideally export this and make it public static
+        try {
+            in = new Scanner(Paths.get(args[0]));
+        } catch (IOException e) {
+            System.err.println("Error opening file: " + args[0]);
+            return;
+        }
+        Tokenizer t = new Tokenizer(in);
+        
+        constructPT(t);
     }
 
 
@@ -113,6 +128,7 @@ public class ptt {
         }
 
         //no case system
+        return p;
     }
 
 
@@ -148,35 +164,119 @@ public class ptt {
     public static ParseTree parseWhile(Tokenizer t) {
         ParseTree p = new ParseTree("loop");
         if (t.getToken() != TokenKind.WHILE) {
-            System.out.println("error");
+            System.out.println("expecting while");
         }
+        t.skipToken();
+        p.append(parseCond(t));
+        if (t.getToken() != TokenKind.LOOP){
+        	System.out.print("expecting loop");
+        }
+        t.skipToken();
+        p.append(parseStmtSeq(t));
+        if (t.getToken() != TokenKind.END){
+        	System.out.println("end expected");
+        }
+        t.skipToken();
+        if (t.getToken() != TokenKind.SEMICOLON){
+        	System.out.println("Expected semicolon");
+        }
+        t.skipToken();
         return p;
     }
 
     public static ParseTree parseIf(Tokenizer t) {
         ParseTree p = new ParseTree("if");
         if (t.getToken() != TokenKind.IF) {
-            System.out.println("error");
+            System.out.println("expecting if token");
+        }
+        t.skipToken();
+        p.append(parseCond(t));
+        if (t.getToken() != TokenKind.THEN){
+        	System.out.println("expecting then");
+        }
+        t.skipToken();
+        p.append(parseStmtSeq(t));
+        if (t.getToken() == TokenKind.ELSE){
+        	t.skipToken();
+        	p.append(parseStmtSeq(t));
+        }
+        if (t.getToken() != TokenKind.END){
+        	System.out.println("Expecting end");
+        }
+        t.skipToken();
+        if (t.getToken() != TokenKind.SEMICOLON){
+        	System.out.println("Expecting semicolon");
+        }
+        t.skipToken();
+        return p;
+    }
+
+    //Don't have an explicit condition, this is an amalgamation of not and or 
+    
+    public static ParseTree parseCond(Tokenizer t) {
+        ParseTree p = new ParseTree("cond");
+        if (t.getToken() == TokenKind.EXCLAMATION){
+        	ParseTree n = new ParseTree("not");
+        	p.append(n);
+        	t.skipToken();
+        	p.append(parseCond(t));
+        }
+        else if (t.getToken() == TokenKind.LEFT_PAR){
+        	t.skipToken();
+        	p.append(parseCond(t));
+        	if (t.getToken() == TokenKind.AND_OPERATOR){
+        		ParseTree a = new ParseTree("and");
+        		p.append(a);
+        	}
+        	else if (t.getToken() == TokenKind.OR_OPERATOR){
+        		ParseTree o = new ParseTree("or");
+        		p.append(o);
+        	} else{
+        		System.out.println("expecting and or or");
+        	}
+        	t.skipToken();
+        	p.append(parseCond(t));
+        	if (t.getToken() != TokenKind.RIGHT_PAR){
+        		System.out.println("expecting right paren");
+        	}
+        	t.skipToken();
+        }
+        else{
+        	p.append(parseCmpr(t));
         }
         return p;
     }
 
-    //what is cond token
-    /*
-    public static ParseTree parseCond(Tokenizer t) {
-        ParseTree p = new ParseTree("cond");
-        if (t.getToken() != TokenKind.COND) {
-            System.out.println("error");
-        }
-        return p;
-    }*/
-
     public static ParseTree parseCmpr(Tokenizer t) {
         ParseTree p = new ParseTree("cmpr");
         //check against all comparators?
-        if (t.getToken() != TokenKind.WHILE) {
-            System.out.println("error");
+        if (t.getToken() != TokenKind.LEFT_BRACKET) {
+            System.out.println("expecting left bracket");
         }
+        t.skipToken();
+        p.append(parseExpr(t));
+        TokenKind tk = t.getToken();
+        switch (tk) {
+            case LESS:
+            case GREATER:
+            case LESS_EQUAL:
+            case GREATER_EQUAL:
+            case EQUALITY_TEST:
+            case NOT_EQUAL:
+            	ParseTree boolp = new ParseTree("bool");
+            	//how give value to boolP?
+                p.append(boolp);
+                break;
+            default:
+                System.out.println("Expecting a comparison operator!");
+        }
+        t.skipToken();
+        t.append(parseExpr(s));
+        if (t.currentToken() != TokenKind.RIGHT_BRACKET){
+        	System.out.println("expecting right bracket!");
+        }
+        t.skipToken();
+        
         return p;
     }
 

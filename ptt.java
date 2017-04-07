@@ -31,12 +31,12 @@ public class ptt {
         }
         t.skipToken();
         //then begin statement
-        p.addChild(parseDeclSeq());
+        p.addChild(generateDeclSeq());
         if (t.getToken() != TokenKind.BEGIN) {
             System.out.println("Should have begin");
         }
         t.skipToken();
-        p.addChild(parseStmtSeq());
+        p.addChild(generateStmtSeq());
         if (t.getToken() != TokenKind.END) {
             System.out.print("should have end");
         }
@@ -49,25 +49,25 @@ public class ptt {
 
     }
 
-    public static ParseTree parseDeclSeq() {
+    public static ParseTree generateDeclSeq() {
         ParseTree p = new ParseTree("declseq");
         if (t.getToken() != TokenKind.INT) {
             System.out.println("Should have an int here");
         }
-        p.addChild(parseDecl());
+        p.addChild(generateDecl());
         while (t.getToken() != TokenKind.BEGIN) {
-            p.addChild(parseDeclSeq());
+            p.addChild(generateDeclSeq());
         }
         return p;
     }
 
-    private static ParseTree parseDecl() {
+    private static ParseTree generateDecl() {
         ParseTree p = new ParseTree("decl");
         if (t.getToken() != TokenKind.INT) {
-            System.out.println("parseDecl should have int");
+            System.out.println("generateDecl should have int");
         }
         t.skipToken();
-        p.addChild(parseIdList());
+        p.addChild(generateIdList());
         if (t.getToken() != TokenKind.SEMICOLON) {
             System.out.println("should finish with a semicolon");
         }
@@ -75,7 +75,7 @@ public class ptt {
         return p;
     }
 
-    private static ParseTree parseIdList() {
+    private static ParseTree generateIdList() {
         ParseTree p = new ParseTree("idlist");
         if (t.getToken() != TokenKind.IDENTIFIER) {
             System.out.println("Wanted an ID");
@@ -87,96 +87,85 @@ public class ptt {
         t.skipToken();
         if (t.getToken() == TokenKind.COMMA) {
             t.skipToken();
-            p.addChild(parseIdList());
+            p.addChild(generateIdList());
         }
         return p;
     }
 
-    private static ParseTree parseStmtSeq() {
+    private static ParseTree generateStmtSeq() {
         ParseTree p = new ParseTree("stmtseq");
         TokenKind tk = t.getToken();
         switch (tk) {
             case IDENTIFIER:
-                p.addChild(parseAssign());
+                p.addChild(generateAssign());
                 break;
             case IF:
-                p.addChild(parseIf());
+                p.addChild(generateIf());
                 break;
-                /*
-            case DO:
-                p.addChild(parseWhile());
-                break;
-                */
             case READ:
-                p.addChild(parseIn());
+                p.addChild(generateIn());
                 break;
             case WRITE:
-                p.addChild(parseOut());
+                p.addChild(generateOut());
                 break;
             default:
-                System.out.println("DIdn't find case for parseStmtSeq");
+                System.out.println("DIdn't find case for generateStmtSeq");
                 break;
         }
-        //CHECK THIS, should it skip a token here
         switch (tk) {
             case IDENTIFIER:
-            //case TokenKind.DO:
             case READ:
             case WRITE:
-                p.addChild(parseStmtSeq());
+                p.addChild(generateStmtSeq());
                 break;
             default:
                 System.out.println("no more");
         }
-
-        //no case system
         return p;
     }
 
-
-    //how handle input and output? ah read and write tokens, come back to these
-    public static ParseTree parseOut() {
+    public static ParseTree generateOut() {
         ParseTree p = new ParseTree("out");
         if (t.getToken() != TokenKind.WRITE) {
             System.out.println("should be write");
         }
         t.skipToken();
-        p.addChild(parseIdList());
+        p.addChild(generateIdList());
         if (t.getToken() != TokenKind.SEMICOLON) {
-            System.out.println("was expecting a semicolon");
+            System.out.println("was wanting a semicolon");
         }
         t.skipToken();
         return p;
     }
-    public static ParseTree parseIn() {
+    public static ParseTree generateIn() {
         ParseTree p = new ParseTree("in");
         if (t.getToken() != TokenKind.READ) {
-            System.out.println("expected read");
+            System.out.println("wanted read");
         }
         t.skipToken();
-        p.addChild(parseIdList());
+        p.addChild(generateIdList());
         if (t.getToken() != TokenKind.SEMICOLON) {
-            System.out.println("expecting semicolon!");
+            System.out.println("wanting semicolon!");
         }
         t.skipToken();
         return p;
     }
 
     //Putting in stub classes, filling in later
-    public static ParseTree parseWhile() {
+    public static ParseTree generateWhile() {
         ParseTree p = new ParseTree("loop");
         if (t.getToken() != TokenKind.WHILE) {
-            System.out.println("expecting while");
+            System.out.println("wanting while");
         }
         t.skipToken();
-        p.addChild(parseCond());
+        p.addChild(generateCond());
         if (t.getToken() != TokenKind.LOOP){
-        	System.out.print("expecting loop");
+        	System.out.print("wanting loop");
         }
         t.skipToken();
-        p.addChild(parseStmtSeq());
+        p.addChild(generateStmtSeq());
         if (t.getToken() != TokenKind.END){
-        	System.out.println("end expected");
+        	System.out.println("end wanted");
         }
         t.skipToken();
         if (t.getToken() != TokenKind.SEMICOLON){
@@ -186,21 +175,21 @@ public class ptt {
         return p;
     }
 
-    public static ParseTree parseIf() {
+    public static ParseTree generateIf() {
         ParseTree p = new ParseTree("if");
         if (t.getToken() != TokenKind.IF) {
-            System.out.println("expecting if token");
+            System.out.println("wanting if token");
         }
         t.skipToken();
-        p.addChild(parseCond());
+        p.addChild(generateCond());
         if (t.getToken() != TokenKind.THEN){
-        	System.out.println("expecting then");
+        	System.out.println("wanting then");
         }
         t.skipToken();
-        p.addChild(parseStmtSeq());
+        p.addChild(generateStmtSeq());
         if (t.getToken() == TokenKind.ELSE){
         	t.skipToken();
-        	p.addChild(parseStmtSeq());
+        	p.addChild(generateStmtSeq());
         }
         if (t.getToken() != TokenKind.END){
         	System.out.println("Expecting end");
@@ -215,17 +204,17 @@ public class ptt {
 
     //Don't have an explicit condition, this is an amalgamation of not and or 
     
-    public static ParseTree parseCond() {
+    public static ParseTree generateCond() {
         ParseTree p = new ParseTree("cond");
         if (t.getToken() == TokenKind.EXCLAMATION){
         	ParseTree n = new ParseTree("not");
         	p.addChild(n);
         	t.skipToken();
-        	p.addChild(parseCond());
+        	p.addChild(generateCond());
         }
         else if (t.getToken() == TokenKind.LEFT_PAR){
         	t.skipToken();
-        	p.addChild(parseCond());
+        	p.addChild(generateCond());
         	if (t.getToken() == TokenKind.AND_OPERATOR){
         		ParseTree a = new ParseTree("and");
         		p.addChild(a);
@@ -234,29 +223,29 @@ public class ptt {
         		ParseTree o = new ParseTree("or");
         		p.addChild(o);
         	} else{
-        		System.out.println("expecting and or or");
+        		System.out.println("wanting and or or");
         	}
         	t.skipToken();
-        	p.addChild(parseCond());
+        	p.addChild(generateCond());
         	if (t.getToken() != TokenKind.RIGHT_PAR){
-        		System.out.println("expecting right paren");
+        		System.out.println("wanting right paren");
         	}
         	t.skipToken();
         }
         else{
-        	p.addChild(parseCmpr());
+        	p.addChild(generateCmpr());
         }
         return p;
     }
 
-    public static ParseTree parseCmpr() {
+    public static ParseTree generateCmpr() {
         ParseTree p = new ParseTree("cmpr");
         //check against all comparators?
         if (t.getToken() != TokenKind.LEFT_BRACKET) {
-            System.out.println("expecting left bracket");
+            System.out.println("wanting left bracket");
         }
         t.skipToken();
-        p.addChild(parseExpr());
+        p.addChild(generateExpr());
         TokenKind tk = t.getToken();
         switch (tk) {
             case LESS:
@@ -273,40 +262,40 @@ public class ptt {
                 System.out.println("Expecting a comparison operator!");
         }
         t.skipToken();
-        p.addChild(parseExpr());
+        p.addChild(generateExpr());
         if (t.getToken() != TokenKind.RIGHT_BRACKET){
-        	System.out.println("expecting right bracket!");
+        	System.out.println("wanting right bracket!");
         }
         t.skipToken();
         
         return p;
     }
 
-    public static ParseTree parseAssign() {
+    public static ParseTree generateAssign() {
         ParseTree p = new ParseTree("assign");
         if (t.getToken() != TokenKind.IDENTIFIER) {
-            System.out.println("identifier expected");
+            System.out.println("identifier wanted");
         }
         ParseTree id = new ParseTree("id");
         //how give value to id?
         p.addChild(id);
         t.skipToken();
         if (t.getToken() != TokenKind.ASSIGNMENT_OPERATOR){
-        	System.out.println("assignment operator expected");
+        	System.out.println("assignment operator wanted");
         }
         t.skipToken();
-        p.addChild(parseExpr());
+        p.addChild(generateExpr());
         if (t.getToken() != TokenKind.SEMICOLON){
-        	System.out.println("semicolon expected");
+        	System.out.println("semicolon wanted");
         }
         t.skipToken();
         return p;
     }
 
-    public static ParseTree parseExpr() {
+    public static ParseTree generateExpr() {
         ParseTree p = new ParseTree("expr");
         //check against plus, minus 
-        p.addChild(parseTrm());
+        p.addChild(generateTrm());
         if (t.getToken() == TokenKind.PLUS){
         	ParseTree plus = new ParseTree("plus");
         	p.addChild(plus);
@@ -318,26 +307,26 @@ public class ptt {
         	System.out.println("Expecting plus or minus");
         }
         t.skipToken();
-        p.addChild(parseExpr());	
+        p.addChild(generateExpr());	
         return p;
     }
 
-    public static ParseTree parseTrm() {
+    public static ParseTree generateTrm() {
         ParseTree p = new ParseTree("trm");
         //for strictly multiplication
-        p.addChild(parseOp());
+        p.addChild(generateOp());
         if (t.getToken() != TokenKind.MULT) {
             System.out.println("Expecting multiplication!");
         } else{
         	p.addChild(new ParseTree("times"));
         	t.skipToken();
-        	p.addChild(parseTrm());
+        	p.addChild(generateTrm());
         }
         return p;
     }
 
     //parens
-    public static ParseTree parseOp() {
+    public static ParseTree generateOp() {
         ParseTree p = new ParseTree("op");
         TokenKind tk = t.getToken();
         
@@ -356,13 +345,13 @@ public class ptt {
             	ParseTree min = new ParseTree("min");
             	t.skipToken();
             	p.addChild(min);
-            	p.addChild(parseOp());
+            	p.addChild(generateOp());
             	break;
             case LEFT_PAR:
             	t.skipToken();
-            	p.addChild(parseExpr());
+            	p.addChild(generateExpr());
             	if (t.getToken() != TokenKind.RIGHT_PAR){
-            		System.out.println("Right parenthesis expected");
+            		System.out.println("Right parenthesis wanted");
             	}
             	t.skipToken();
             	break;

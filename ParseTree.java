@@ -19,13 +19,8 @@ public class ParseTree {
 		this.value = val;
 	}
 	
-	//adjust indentsize if needed
-	public void setIndent(int indent){
-		this.indentSize = indent;
-	}
-	
 	//add children
-	public void append(ParseTree p){
+	public void addChild(ParseTree p){
 		this.children.add(p);
 	}
 

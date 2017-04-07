@@ -1,8 +1,12 @@
--brief description of design of tokenizer
-The tokenizer class currently has two main methods: getToken() and skipToken(). getToken will read the current token without altering the location it's reading from. skipToken will skip ahead and update the index until it reaches the next token.
--brief user manual how to use tokenizer
-To use the tokenizer, create the Tplemozer with the path to a file you wish to tokenize as an argument. You can then either get a token or skip to the next token. 
--brief description of how tokenizer tested
-The tokenizer was tested against the test files given on the website.
--list of remaining bugs
-I'm still having trouble with some string indexing going beyond bounds (especially in the case of reading double character tokens, such as == or ||), and with the tokenizer knowing to read a whole identifier even if it has numerals in it. 
+Tyler Degen
+
+-description of interpreter
+The interpreter is built off of a singular ParseTree design. Each token is a ParseTree (instead of being an object).
+-description of ParseTree class
+The ParseTree class, simply, has its type, the list of its children, and its value.
+-brief user manual
+To use the ParseTree as currently implemented, simply compile all the Java files and run the following command:
+java ptt testfile.txt
+-Brief test plan / remainig bugs
+I could not figure out how to build while loops with my parsetree. As such, I was unable to figure out how to print or 
+Additionally, there seems to be an issue with my program reading multiple line programs. If they are all on the same line, as included in test.txt, it works better.

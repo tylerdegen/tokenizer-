@@ -336,7 +336,7 @@ public class ptt {
     //parens
     public static ParseTree parseOp(Tokenizer t) {
         ParseTree p = new ParseTree("op");
-        TokenKind tk = t.currentToken();
+        TokenKind tk = t.getToken();
         
         switch (tk) {
             case INTEGER_CONSTANT:
@@ -353,12 +353,12 @@ public class ptt {
             	ParseTree min = new ParseTree("min");
             	t.skipToken();
             	p.append(min);
-            	p.append(parseOp(s));
+            	p.append(parseOp(t));
             	break;
             case LEFT_PAR:
             	t.skipToken();
             	p.append(parseExpr(t));
-            	if (t.getTok() != TokenKind.RIGHT_PAR){
+            	if (t.getToken() != TokenKind.RIGHT_PAR){
             		System.out.println("Right parenthesis expected");
             	}
             	t.skipToken();

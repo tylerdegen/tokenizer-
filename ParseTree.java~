@@ -26,6 +26,7 @@ public class ParseTree {
 	
 	//add children
 	public void append(ParseTree p){
+		//this or no?
 		this.children.add(p);
 	}
 
